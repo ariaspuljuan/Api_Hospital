@@ -1,12 +1,20 @@
-# Etapa 1: Construcción
-FROM maven:3.9.6-eclipse-temurin-17 AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
+# Imagen base con Java 17
+FROM eclipse-temurin:17-jdk-alpine
 
-# Etapa 2: Ejecución
-FROM eclipse-temurin:17-jdk
+# Establecer el directorio de trabajo
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Copiar el código fuente del proyecto
+COPY . .
+
+# Dar permisos de ejecución a Maven Wrapper
+RUN chmod +x ./mvnw
+
+# Compilar el proyecto sin ejecutar los tests
+RUN ./mvnw clean package -DskipTests
+
+# Exponer el puerto de la app (el mismo que tienes en application.properties)
+EXPOSE 8081
+
+# Ejecutar el JAR generado
+ENTRYPOINT ["java", "-jar", "target/hospital_crud-0.0.1-SNAPSHOT.jar"]
