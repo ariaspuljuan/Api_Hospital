@@ -45,11 +45,14 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
+        <!-- CAMBIADO: MySQL por PostgreSQL -->
         <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

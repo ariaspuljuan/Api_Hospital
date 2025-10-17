@@ -1,20 +1,30 @@
-# Imagen base con Java 17
-FROM eclipse-temurin:17-jdk-alpine
+# Dockerfile
+# Este archivo va en la RAÍZ de tu proyecto (mismo nivel que pom.xml)
 
-# Establecer el directorio de trabajo
+# Etapa 1: Build
+FROM maven:3.9.5-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copiar el código fuente del proyecto
-COPY . .
+# Copiar archivos de configuración de Maven
+COPY pom.xml .
+COPY src ./src
 
-# Dar permisos de ejecución a Maven Wrapper
-RUN chmod +x ./mvnw
+# Compilar el proyecto (con PostgreSQL)
+RUN mvn clean package -DskipTests
 
-# Compilar el proyecto sin ejecutar los tests
-RUN ./mvnw clean package -DskipTests
+# Etapa 2: Runtime
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
 
-# Exponer el puerto de la app (el mismo que tienes en application.properties)
-EXPOSE 8081
+# Copiar el JAR compilado desde la etapa de build
+COPY --from=build /app/target/*.jar app.jar
 
-# Ejecutar el JAR generado
-ENTRYPOINT ["java", "-jar", "target/hospital_crud-0.0.1-SNAPSHOT.jar"]
+# Exponer el puerto
+EXPOSE 8080
+
+# Variables de entorno
+ENV SPRING_PROFILES_ACTIVE=prod
+ENV JAVA_OPTS="-Xms256m -Xmx512m"
+
+# Comando para ejecutar la aplicación
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

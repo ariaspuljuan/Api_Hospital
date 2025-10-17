@@ -1,4 +1,56 @@
+# .dockerignore
+# Este archivo va en la RAÍZ de tu proyecto (mismo nivel que pom.xml)
+
+# Ignorar directorios de construcción
 target/
-.git
+.idea/
+.vscode/
+.mvn/
+logs/
+
+# Ignorar archivos de build
+*.jar
+*.war
+*.ear
+*.class
+
+# Ignorar archivos de IDE
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.metadata/
+
+# Ignorar archivos de sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Ignorar archivos de Git
+.git/
 .gitignore
+.gitattributes
+
+# Ignorar archivos de log
+*.log
+logs/
+
+# Ignorar archivos de configuración local
+application-local.properties
+application-dev.properties
+
+# Ignorar archivos de Docker (no necesarios dentro de la imagen)
+*.md
 README.md
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Ignorar archivos de backup
+*.bak
+*.tmp
+*.temp
