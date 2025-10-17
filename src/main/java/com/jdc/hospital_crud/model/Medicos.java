@@ -14,19 +14,19 @@ public class Medicos {
     @Column(nullable = false, length = 50)
     private String nombres;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 50)
     private String primerApellido;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 50)
     private String segundoApellido;
 
     @Column(nullable = false)
     private int genero;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 50)
     private String email;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 50)
     private String telefono;
 
     // Relación con Categoria
